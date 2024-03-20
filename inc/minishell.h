@@ -6,7 +6,7 @@
 /*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:36:05 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 21:46:50 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:51:12 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,9 @@ void		exit_status(t_data	*data, int j);
 /*	executor.c	*/
 int			ft_execute_builtin(t_data *data, t_pipe *p);
 void		ft_check_access(t_data *data, char **cmd, t_pipe *p);
-void		child_process(t_data *data, t_pipe *p, int last);
-int			last_process(t_data *data, t_pipe *p);
-int			executor(t_data *data, t_pipe *p);
+void		ft_child_process(t_data *data, t_pipe *p, int last);
+int			ft_last_process(t_data *data, t_pipe *p);
+int			ft_executor(t_data *data, t_pipe *p);
 
 /*	EXPANSOR	*/
 /*	expan_utils.c	*/

@@ -6,7 +6,7 @@
 /*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:37:26 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 19:45:32 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:50:43 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_minihell(t_data *data)
 		return (1);
 	if (!ft_parser(data, &data->token, 1, data->fds))
 		return (1);
-	if (executor(data, data->p))
+	if (ft_executor(data, data->p))
 		return (0);
 	return (1);
 }

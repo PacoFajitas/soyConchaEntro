@@ -6,7 +6,7 @@
 /*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:30:18 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 19:24:57 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:52:01 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_check_access(t_data *data, char **cmd, t_pipe *p)
 	}
 }
 
-void	child_process(t_data *data, t_pipe *p, int last)
+void	ft_child_process(t_data *data, t_pipe *p, int last)
 {
 	if (!last)
 	{
@@ -73,7 +73,7 @@ void	child_process(t_data *data, t_pipe *p, int last)
 		ft_error_exit(data, NULL, NULL, 126);
 }
 
-int	last_process(t_data *data, t_pipe *p)
+int	ft_last_process(t_data *data, t_pipe *p)
 {
 	if (!data->pipes && data->p->builtin)
 	{
@@ -84,7 +84,7 @@ int	last_process(t_data *data, t_pipe *p)
 	if (data->pid < 0)
 		exit(1);
 	else if (data->pid == 0)
-		child_process(data, p, 1);
+		ft_child_process(data, p, 1);
 	if (data->pipes && data->p->in >= 0)
 		close(p->in);
 	close(data->fd[0]);
@@ -94,7 +94,7 @@ int	last_process(t_data *data, t_pipe *p)
 /* 	0 si cagaste 
 	fd == 0 es reader
   	fd == 1 es writer */
-int	executor(t_data *data, t_pipe *p)
+int	ft_executor(t_data *data, t_pipe *p)
 {
 	int	i;
 
@@ -108,14 +108,14 @@ int	executor(t_data *data, t_pipe *p)
 		if (data->pid < 0)
 			return (ft_error_ret(data, "pipe", "error", -1));
 		if (data->pid == 0)
-			child_process(data, p, 0);
+			ft_child_process(data, p, 0);
 		close (data->fd[1]);
 		if (p->in >= 0)
 			close (p->in);
 		p = p->next;
 		p->in = data->fd[0];
 	}
-	data->exit = last_process(data, p);
+	data->exit = ft_last_process(data, p);
 	exit_status(data, -1);
 	if (p->cmds && p->cmds[0] && !ft_strcmp(p->cmds[0], "test"))
 		data->exit = 1;
