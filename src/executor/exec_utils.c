@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:30:27 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 09:13:08 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 10:07:25 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,60 +106,32 @@ int	ft_check_access_file(char *str, int mode)
 
 void	ft_open_file(t_data *data, t_pipe *p, t_fd *fd, int prev)
 {
-	int	x;
-	struct stat	stat;
-	
-	x = data->p->in;
 	while (fd)
 	{
 		ft_check_open(p, fd, prev);
-		lstat(fd->str, &stat);
 		if (fd->type == HDOC)
 			p->in = fd->fd;
 		else if (!fd->str || *fd->str == '\0')
 			exit(ft_error_exit(data, NULL, "No such file or directory\n", 1));
 		else if (fd->type == REDIRIN)
-		{
 			p->in = open(fd->str, O_RDONLY);
-			x = access(fd->str, F_OK);
-			if(p->in < 0 || x < 0)
-			{
-				ft_putstr_fd("minishell: ", 2);
-				data->exit = 1;
-				perror(fd->str);
-				exit(data->exit);
-			}
-			
-		}
 		else if (fd->type == REDIROUT)
-		{
 			p->out = open(fd->str, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP
 			| S_IROTH);
-			x = access(fd->str, W_OK);
-			if(p->out < 0 || x < 0)
-			{
-				ft_putstr_fd("minishell: ", 2);
-				data->exit = 1;
-				perror(fd->str);
-				exit(data->exit);
-			}
-		}
 		else if (fd->type == APPEND)
-		{
 			p->out = open(fd->str, O_APPEND | O_CREAT | O_RDWR, 0666);
-			x = access(fd->str, W_OK);
-			if(p->out < 0 || x < 0)
-			{
-				ft_putstr_fd("minishell: ", 2);
-				data->exit = 1;
-				perror(fd->str);
-				exit(data->exit);
-			}
-		}
 		if (p->in < 0 && (fd->type == HDOC || fd->type == REDIRIN))
-			exit(1);
+		{
+			data->exit = 1;
+			perror(fd->str);
+			exit(data->exit);
+		}
 		if (p->out < 0 && (fd->type == REDIROUT || fd->type == APPEND))
-			exit(1);
+		{
+			data->exit = 1;
+			perror(fd->str);
+			exit(data->exit);
+		}
 		prev = fd->type;
 		fd = fd->next;
 	}

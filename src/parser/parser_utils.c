@@ -6,11 +6,11 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:44:40 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/18 13:56:36 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:19:47 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 void	ft_init_pipe(t_pipe *p)
 {

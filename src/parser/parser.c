@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:46:06 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/18 16:14:55 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:41:40 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	parse_cmds(t_data *data, t_pipe *p, t_token **tmp)
 	p->cmds = ft_token_to_array(tmp, p->cmds);
 	if (!p->cmds)
 		return (0);
-	p->path = ft_get_cmd_path(&data->env, (*tmp)->content);
+	p->path = ft_get_cmd_path(&data->env, p->cmds[0]);
 	p->builtin = ft_check_builtin(p);
 	// if (!p->path && !p->builtin)
 	// {

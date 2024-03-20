@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 04:59:43 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/17 16:48:55 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:10:26 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	*ft_expand_string(char *str, t_data *data, int i, int *exp)
 {
 	char	*cont;
 	char	*key;
+	char	*test;
 	char	*j;
 	if (!str)
 		return (NULL);
@@ -70,8 +71,14 @@ char	*ft_expand_string(char *str, t_data *data, int i, int *exp)
 		key = ft_strdup("");
 		while (str[++i] && str[i] != ' ' && str[i] != '$')
 			key = ft_strjoin_char(key, str[i]);
-		cont = ft_strjoinfree(cont, ft_get_env_value(&data->env, key));
-		free(key);
+		test = ft_get_env_value(&data->env, key);
+		if (test)
+		{
+			free(key);
+			key = ft_strdup(test);
+			cont = ft_strjoinfree(cont, key);
+			free(key);
+		}
 		if (str[i] != '$')
 		{
 			i -= 1;

@@ -6,7 +6,7 @@
 #    By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 19:38:11 by mlopez-i          #+#    #+#              #
-#    Updated: 2024/03/18 23:46:17 by tfiguero         ###   ########.fr        #
+#    Updated: 2024/03/20 17:18:09 by tfiguero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,36 +61,31 @@ SRCS += $(addprefix $(UTILS_PATH)/, fd_utils.c \
 		mem_utils.c \
 		lst_utils.c \
 		fd_utils2.c)
-
-
-
-
-
 SRCS += $(addprefix $(SYNTAX_PATH)/, syntax.c)
 
 
-
-CC = cc 
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -I ./inc #-g -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror -I ./inc -g -fsanitize=address 
 
 RDLFL = -lreadline -ltermcap #-lhistory -lft 
 READL = inc/readline/libreadline.a 
 HISTORY = inc/readline/libhistory.a
+OBJS = ${SRCS:.c=.o}
+
 
 %.o: %.c ${HEADER} Makefile
-		@${CC} ${CFLAGS} -c $< -o $@	
-
-OBJS = ${SRCS:.c=.o}
+		@${CC} ${CFLAGS} -c $< -o $@
 
 all:
 		@$(MAKE) -C $(LIBFT_MAKE) --no-print-directory
+		@$(MAKE) ${READL}
+		@$(MAKE) ${NAME}
+
+${READL}:
 		@cd inc/readline && ./configure &>/dev/null
 		@$(MAKE) -C $(READLINE_MAKE) --no-print-directory
-		@$(MAKE) ${NAME} --no-print-directory
 
-
-${NAME}:: ${OBJS} ${HISTORY} ${READL} ${RDLFL} ${LIBFT}
+${NAME}: ${OBJS} ${HISTORY} ${READL} ${RDLFL} ${LIBFT}
 	@${CC} $(CFLAGS) $(OBJS) $(LIBFT) $(HISTORY) $(READL) $(RDLFL) -o ${NAME}
 	@echo "everything done"
 

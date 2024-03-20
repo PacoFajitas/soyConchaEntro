@@ -6,11 +6,11 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 22:57:31 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 09:18:54 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:18:54 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 int	ft_cd_access(t_data *data, char *path)
 {

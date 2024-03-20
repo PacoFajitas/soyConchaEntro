@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:10:00 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/02/25 19:25:38 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/20 12:54:30 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ char	**ft_free_array(char **array)
 	int	i;
 
 	i = 0;
-	while (array[i])
+	while (array[i] && *array[i])
 	{
 		free(array[i]);
 		i++;
 	}
-	free(array);
+	if (array)
+		free(array);
 	return (NULL);
 }
