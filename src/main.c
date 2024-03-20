@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:37:26 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 17:19:37 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:45:32 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_minihell(t_data *data)
 	data->line = readline("minihell😭🔥👿$ ");
 	ft_general_handler(1);
 	add_history(data->line);
-	if (!ft_tokenize(data, data->line))
+	if (!ft_tokenize(data, data->line, NULL, 0))
 		return (0);
 	data->token = ft_expan(&data->token, data, 0, &data->exp);
 	if (!ft_syntax_error(data, &data->token))
@@ -26,7 +26,7 @@ int	ft_minihell(t_data *data)
 	ft_look_for_quotes(&data->token);
 	if (!data->token)
 		return (1);
-	if (!ft_parser(data, &data->token))
+	if (!ft_parser(data, &data->token, 1, data->fds))
 		return (1);
 	if (executor(data, data->p))
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:30:18 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 13:26:45 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:24:57 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ int	ft_execute_builtin(t_data *data, t_pipe *p)
 	if (!data->pipes && !ft_open_builtin(data, p, p->fds, -1))
 		return (1);
 	if (p->builtin == 1)
-		return (ft_echo(p));
+		return (ft_echo(p, 0, 1));
 	else if (p->builtin == 2)
 		return (ft_cd(data, p, &data->env, &data->export));
 	else if (p->builtin == 3)
 		ft_pwd(p, data);
 	else if (p->builtin == 4)
-		return (ft_export(&data, p));
+		return (ft_export(&data, p, 1));
 	else if (p->builtin == 5)
 		return (ft_unset(p, &data));
 	else if (p->builtin == 6)
 		return (ft_print_env(&data->env, p));
 	else if (p->builtin == 7)
-		return (ft_exit_b(p, data));
+		return (ft_exit_b(p, data, 0, 0));
 	return (0);
 }
 

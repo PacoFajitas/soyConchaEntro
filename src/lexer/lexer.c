@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:30:53 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/16 19:49:49 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:38:23 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,8 @@ t_token	*ft_space_token(char *line, int *i)
 	return (ft_new_token(content, SPACES, 0));
 }
 
-int	ft_tokenize(t_data *data, char *line)
+int	ft_tokenize(t_data *data, char *line, t_token *token, int i)
 {
-	t_token	*token;
-	int		i;
-
-	i = 0;
-	token = NULL;
 	line = ft_clean_line(line);
 	data->line = line;
 	if (!line)
@@ -124,7 +119,5 @@ int	ft_tokenize(t_data *data, char *line)
 	}
 	if (!data->token || !data->token->content)
 		return (1);
-	// ft_print_tokens(&data->token);
-	// ft_look_for_quotes(&data->token);
 	return (1);
 }

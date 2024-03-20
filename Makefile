@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+         #
+#    By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 19:38:11 by mlopez-i          #+#    #+#              #
-#    Updated: 2024/03/20 17:18:09 by tfiguero         ###   ########.fr        #
+#    Updated: 2024/03/20 21:01:55 by mlopez-i         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,11 @@ SRCS += $(addprefix $(ENV_PATH)/, env.c \
 		env_utils2.c)
 SRCS += $(addprefix $(ERRORS_PATH)/, errors.c)
 SRCS += $(addprefix $(EXEC_PATH)/, executor.c \
-		exec_utils.c)
+		exec_utils.c \
+		exec_utils2.c)
 SRCS += $(addprefix $(EXPANSOR_PATH)/, expansor.c \
-		expan_utils.c )
+		expan_utils.c \
+		expan_utils2.c)
 SRCS += $(addprefix $(EXPORT_PATH)/, export.c \
 		export_utils.c)
 SRCS += $(addprefix $(LEXER_PATH)/, lexer.c \
@@ -60,6 +62,7 @@ SRCS += $(addprefix $(SIGNALS_PATH)/, signals.c)
 SRCS += $(addprefix $(UTILS_PATH)/, fd_utils.c \
 		mem_utils.c \
 		lst_utils.c \
+		lst_utils2.c \
 		fd_utils2.c)
 SRCS += $(addprefix $(SYNTAX_PATH)/, syntax.c)
 

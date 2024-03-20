@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 22:44:51 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/16 21:18:26 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:28:00 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	ft_add_export(char *str, t_env **env)
 	env_node = malloc(sizeof(t_env));
 	key = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
 	if (!key)
-		return /*(ft_malloc_errror())*/;
+		return (perror(NULL));
 	value = ft_strdup(ft_strchr(str, '=') + 1);
 	if (!value)
 	{
 		free(key);
-		return /*(ft_malloc_errror())*/;
+		return (perror(NULL));
 	}
 	env_node->key = key;
 	env_node->value = value;
@@ -70,7 +70,7 @@ int	ft_check_equal(char	*str)
 {
 	size_t	i;
 	size_t	cont;
-	
+
 	i = 0;
 	cont = 0;
 	while (str[i])
@@ -89,13 +89,6 @@ int	ft_check_equal(char	*str)
 	}
 	return (1);
 }
-
-// void	ft_export_error(char *str)
-// {
-// 	ft_putstr_fd("minishell: export: `", 2);
-// 	ft_putstr_fd(str, 2);
-// 	ft_putstr_fd("': not a valid identifier\n", 2);
-// }
 
 t_env	*ft_search_keys(char *key, t_env **list)
 {

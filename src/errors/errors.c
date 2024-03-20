@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 20:07:33 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/18 22:57:10 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:56:37 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	ft_exit_error(char *cmd, char *msg)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+	if (cmd)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	if (msg)
+	{
+		ft_putstr_fd(msg, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	return (1);
+}
 
 int	ft_error_exit(t_data *data, char *name, char *message, int err)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 23:35:59 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/16 23:49:30 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:58:10 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	ft_pwd(t_pipe *p, t_data *data)
 	out = p->out;
 	if (p->out < 0)
 		out = 1;
-	// pwd = ft_strdup(ft_get_env_value(env, "PWD"));
-	// if (!pwd)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{

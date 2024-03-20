@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_merge.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 19:09:19 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/18 14:29:05 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:23:58 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	ft_redir(t_pipe *p)
-{
-	if (p->in >= 0)
-	{
-		if (dup2(p->in, STDIN_FILENO) < 0)
-			exit(1);
-		close(p->in);
-		p->in = -3;
-	}
-	if (p->out >= 0)
-	{
-		if (dup2(p->out, STDOUT_FILENO) < 0)
-			exit(1);
-		close(p->out);
-		p->out = -3;
-	}
-}
 
 void	ft_look_for_quotes(t_token **token)
 {

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 22:56:41 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 09:56:17 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:32:03 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	ft_check_flag(char *args, int found)
+static int	ft_check_flag(char *args, int found, int *flag)
 {
 	int	i;
 	int	n_flag;
@@ -27,16 +27,12 @@ static int	ft_check_flag(char *args, int found)
 			return (0);
 		i++;
 	}
+	*flag = n_flag;
 	return (n_flag);
 }
 
-int	ft_echo(t_pipe *p)
+int	ft_echo(t_pipe *p, int n_flag, int i)
 {
-	int		n_flag;
-	int		i;
-
-	n_flag = 0;
-	i = 1;
 	if (p->out == -3)
 		p->out = 1;
 	if (!p->cmds[i])
@@ -46,11 +42,8 @@ int	ft_echo(t_pipe *p)
 	}
 	while (p->cmds[i] && p->cmds[i][0] == '-' && p->cmds[i][1] != '-')
 	{
-		if (ft_check_flag(p->cmds[i], n_flag) == 1)
-		{
-			n_flag = 1;
+		if (ft_check_flag(p->cmds[i], n_flag, &n_flag) == 1)
 			i++;
-		}
 		else
 			break ;
 	}

@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:27:04 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/17 05:18:50 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:38:45 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-//	fucked up peta al cerrar intentando liberar este nodo
-// t_env	*ft_new_OLDP(char *key)
-// {
-// 	t_env	*new;
-// 	char 	*value;
-
-// 	new = malloc(sizeof(t_env));
-// 	if (!new)
-// 		return (ft_memdel(key));
-// 	new->key = key;
-// 	value = getcwd(NULL, 0);
-// 	new->value = value;
-// 	if (!new->value)
-// 		return (ft_memdel(new));
-// 	new->next = NULL;
-// 	return (new);
-// }
 
 t_env	*ft_new_node(char *key)
 {

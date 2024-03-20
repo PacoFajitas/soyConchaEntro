@@ -3,80 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:16:13 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 14:12:19 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:34:26 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_lstsize(t_token *lst)
+char	**ft_token_to_array2(char **cmds, int *i)
 {
-	int		i;
-	t_token	*tmp;
+	char	**array;
+	int		j;
 
-	i = 0;
-	tmp = lst;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	return (i);
-}
-
-char	*ft_get_cmd_path(t_env **env, char *cmd)
-{
-	char	*path;
-	char	**paths;
-	int		i;
-
-	if (access(cmd, F_OK) == 0)
-		return (ft_strdup(cmd));
-	path = ft_get_env_value(env, "PATH");
-	if (!path)
+	j = *i;
+	array = ft_calloc((j + 1), sizeof(char *));
+	if (!array)
 		return (NULL);
-	paths = ft_split(path, ':');
-	i = 0;
-	while (paths[i])
+	j = 0;
+	if (cmds && cmds[0])
 	{
-		path = ft_strjoin(paths[i], "/");
-		path = ft_strjoinfree(path, cmd);
-		if (access(path, F_OK) == 0)
+		while (cmds[j])
 		{
-			ft_free_array(paths);
-			return (path);
+			array[j] = ft_strdup(cmds[j]);
+			if (!array[j])
+			{
+				ft_free_array(cmds);
+				return (ft_free_array(array));
+			}
+			j++;
 		}
-		free(path);
-		i++;
+		ft_free_array(cmds);
 	}
-	ft_free_array(paths);
-	return (NULL);
-}
-
-int	ft_count_spaces(char *str)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	if (!str || !str[i])
-		return (0);
-	while (str[i])
-	{
-		if (str[i] && str[i] == ' ')
-		{
-			while (str[i] && str[i] == ' ')
-				i++;
-			count++;
-		}
-		if(str[i])
-			i++;
-	}
-	return (count);
+	*i = j;
+	return (array);
 }
 
 char	**ft_token_to_array(t_token **token, char **cmds)
@@ -99,46 +60,57 @@ char	**ft_token_to_array(t_token **token, char **cmds)
 		i++;
 		tmp = tmp->next;
 	}
-	array = ft_calloc((i + 1), sizeof(char *));
+	array = ft_token_to_array2(cmds, &i);
 	if (!array)
 		return (NULL);
-	i = 0;
-	if (cmds && cmds[0])
-	{
-		while (cmds[i])
-		{
-			array[i] = ft_strdup(cmds[i]);
-			if (!array[i])
-			{
-				ft_free_array(cmds);
-				return (ft_free_array(array));
-			}
-			i++;
-		}
-		ft_free_array(cmds);
-	}
 	tmp = *token;
 	return (ft_aux_array(tmp, array, i));
 }
 
-int	ft_check_for_malloc(char *str, int j)
+char	**ft_aux_array_if(t_token *tmp, char **array, int *i, int j)
 {
-	int	i;
+	int	k;
+	int	l;
 
-	i = 0;
-	while (str[j] && str[j] != ' ')
+	j = 0;
+	l = *i;
+	while (tmp->content[j] != '\0')
 	{
-		i++;
-		j++;
+		k = 0;
+		array[l] = malloc(sizeof(char)
+				* ft_check_for_malloc(tmp->content, j) + 1);
+		if (!array[l])
+			return (ft_free_array(array));
+		while (tmp->content[j] && tmp->content[j] != ' ')
+		{
+			array[l][k] = tmp->content[j];
+			j++;
+			k++;
+		}
+		array[l][k] = '\0';
+		while (tmp->content[j] && tmp->content[j] == ' ')
+			j++;
+		l++;
 	}
-	return (i);
+	*i = l;
+	return (array);
+}
+
+char	**ft_aux_array_else(t_token *tmp, char **array, int *i)
+{
+	int	j;
+
+	j = *i;
+	array[j] = ft_strdup(tmp->content);
+	if (!array[j])
+		return (ft_free_array(array));
+	j++;
+	*i = j;
+	return (array);
 }
 
 char	**ft_aux_array(t_token *tmp, char **array, int i)
 {
-	int	j;
-	int	k;
-	
 	while (tmp)
 	{
 		if (tmp->type != SPACES)
@@ -147,33 +119,13 @@ char	**ft_aux_array(t_token *tmp, char **array, int i)
 				break ;
 			else
 			{
-				if(tmp->expanded == 1 && tmp->type == STRING && tmp->content)
+				if (tmp->expanded == 1 && tmp->type == STRING && tmp->content)
 				{
-					j = 0;
-					while (tmp->content[j] != '\0')
-					{
-						k = 0;
-						array[i] = malloc(sizeof(char) * ft_check_for_malloc(tmp->content, j) + 1);
-						if (!array[i])
-							return (ft_free_array(array));
-						while (tmp->content[j] && tmp->content[j] != ' ')
-						{
-							array[i][k] = tmp->content[j];
-							j++;
-							k++;
-						}
-						array[i][k] = '\0';
-						while (tmp->content[j] && tmp->content[j] == ' ')
-							j++;
-						i++;
-					}
+					array = ft_aux_array_if(tmp, array, &i, 0);
 				}
 				else
 				{
-					array[i] = ft_strdup(tmp->content);
-					if (!array[i])
-						return (ft_free_array(array));
-					i++;
+					array = ft_aux_array_else(tmp, array, &i);
 				}
 			}
 		}

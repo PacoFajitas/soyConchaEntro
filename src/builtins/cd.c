@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 22:57:31 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 17:18:54 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:25:56 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_cd_access(t_data *data, char *path)
 {
 	struct stat	stat;
-	char*		error;
+	char		*error;
 
 	error = ft_strdup("");
 	lstat(path, &stat);
@@ -29,7 +29,6 @@ int	ft_cd_access(t_data *data, char *path)
 		error = ft_strjoin(path, ": Not a directory\n");
 		return (ft_error_ret(data, "cd", error, 1));
 	}
-	
 	if (access(path, X_OK) == -1)
 	{
 		error = ft_strjoin(path, ": Permission denied\n");
@@ -53,7 +52,7 @@ char	*ft_getcwd(void)
 	return (cwd);
 }
 
-int	ft_cd_path(t_env **env, t_env **exp, char *path, char* oldpwd)
+int	ft_cd_path(t_env **env, t_env **exp, char *path, char *oldpwd)
 {
 	oldpwd = ft_getcwd();
 	if (oldpwd == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:44:40 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 17:19:47 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:46:46 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,39 +51,5 @@ void	ft_free_pipe(t_pipe **p)
 			free((*p)->path);
 		free(*p);
 		*p = tmp;
-	}
-}
-
-void	ft_print_pipes(t_pipe **p)
-{
-	t_pipe	*pipe;
-	int		i;
-
-	pipe = *p;
-	if (!pipe)
-	{
-		dprintf(1, "no pipes\n");
-		return ;
-	}
-	while (pipe)
-	{
-		if (!pipe->cmds)
-			dprintf(1, "No comands\n");
-		if (pipe->cmds)
-		{
-			// dprintf(1, "holi\n");
-			i = -1;
-			while (pipe->cmds[++i])
-				dprintf(1, "CMDS:%s&\n", pipe->cmds[i]);
-		}
-		if (pipe->in)
-			dprintf(1, "pipe in:%i\n", pipe->in);
-		// if (pipe->path)
-		// 	dprintf(1, "PATH:%s&\n", pipe->path);
-		if (pipe && pipe->fds && pipe->fds->str)
-			dprintf(1, "FD STR:%s&\n", pipe->fds->str);
-		// if (pipe->fds && pipe->fds->next && pipe->fds->next->str)
-		// 	dprintf(1, "FD STR NEXT:%s&\n", pipe->fds->next->str);
-		pipe = pipe->next;
 	}
 }

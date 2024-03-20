@@ -3,52 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   expan_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 04:59:43 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 14:10:26 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:04:32 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_is_letter(char c)
+int	ft_check_ex_ifs(char *str, int *i)
 {
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	if (c >= 'A' && c <= 'Z')
-		return (1);
-	if (c == '_')
-		return (1);
-	return (0);
+	int	j;
+
+	j = *i;
+	if (str[j] != '$')
+	{
+		j -= 1;
+		*i = j;
+		return (0);
+	}
+	return (1);
 }
 
-char	*ft_strjoin_char(char *str, char add)
+char	*ft_ex_ifs(t_data *data, char *str, char *cont, int *i)
 {
-	char	*new;
-	int		i;
+	char	*key;
+	char	*test;
+	int		j;
 
-	i = 0;
-	new = malloc(sizeof(char) * (ft_strlen(str) + 2));
-	if (!new)
-		return (NULL);
-	while (str && str[i])
+	j = *i;
+	while (str[j])
 	{
-		new[i] = str[i];
-		i++;
+		key = ft_strdup("");
+		while (str[++j] && str[j] != ' ' && str[j] != '$')
+			key = ft_strjoin_char(key, str[j]);
+		test = ft_get_env_value(&data->env, key);
+		if (test)
+		{
+			free(key);
+			key = ft_strdup(test);
+			cont = ft_strjoinfree(cont, key);
+			free(key);
+		}
+		if (!ft_check_ex_ifs(str, i))
+			break ;
 	}
-	new[i] = add;
-	new[i + 1] = '\0';
-	free(str);
-	return (new);
+	*i = j;
+	return (cont);
 }
 
 char	*ft_expand_string(char *str, t_data *data, int i, int *exp)
 {
 	char	*cont;
-	char	*key;
-	char	*test;
 	char	*j;
+
 	if (!str)
 		return (NULL);
 	cont = NULL;
@@ -66,37 +75,44 @@ char	*ft_expand_string(char *str, t_data *data, int i, int *exp)
 	cont = ft_substr(str, 0, i);
 	if (!str[i])
 		return (cont);
-	while (str[i])
-	{
-		key = ft_strdup("");
-		while (str[++i] && str[i] != ' ' && str[i] != '$')
-			key = ft_strjoin_char(key, str[i]);
-		test = ft_get_env_value(&data->env, key);
-		if (test)
-		{
-			free(key);
-			key = ft_strdup(test);
-			cont = ft_strjoinfree(cont, key);
-			free(key);
-		}
-		if (str[i] != '$')
-		{
-			i -= 1;
-			break ;
-		}
-	}
+	cont = ft_ex_ifs(data, str, cont, &i);
 	while (str[i++])
 		cont = ft_strjoin_char(cont, str[i]);
 	*exp = 1;
 	return (cont);
 }
 
-//echo "holi $ USER" no expande (imprime dolar)
-char	*ft_expand_dquoted(char *str, t_data *data, int i, int *exp)
+char	*ft_exdqu_ifs(char *str, t_data *data, char *cont, int *i)
+{
+	char	*j;
+	char	*key;
+	int		k;
+
+	k = *i;
+	key = ft_strdup("");
+	while (str[k] && str[k++] && ft_is_letter(str[k]))
+		key = ft_strjoin_char(key, str[k]);
+	if (key && key[0] != '\0')
+	{
+		cont = ft_strjoinfree(cont, ft_get_env_value(&data->env, key));
+		data->exp = 1;
+	}
+	else if (str[k] == '$' && str[k + 1] == '?')
+	{
+		j = ft_itoa(data->exit);
+		cont = ft_strjoinfree(cont, j);
+		free(j);
+	}
+	else if (str[k] == '$' && !str[k + 1])
+		cont = ft_strjoinfree(cont, "$");
+	free(key);
+	*i = k;
+	return (cont);
+}
+
+char	*ft_expand_dquoted(char *str, t_data *data, int i)
 {
 	char	*cont;
-	char	*key;
-	char		*j;
 
 	if (!str)
 		return (NULL);
@@ -107,23 +123,7 @@ char	*ft_expand_dquoted(char *str, t_data *data, int i, int *exp)
 	{
 		while (str[i] && str[i] != '\0' && str[i] != '$')
 			cont = ft_strjoin_char(cont, str[i++]);
-		key = ft_strdup("");
-		while (str[i] && str[i++] && ft_is_letter(str[i]))
-			key = ft_strjoin_char(key, str[i]);
-		if (key && key[0] != '\0')
-		{
-			cont = ft_strjoinfree(cont, ft_get_env_value(&data->env, key));
-			*exp = 1;
-		}
-		else if (str[i] == '$' && str[i + 1] == '?')
-		{
-			j = ft_itoa(data->exit);
-			cont = ft_strjoinfree(cont, j);
-			free(j);
-		}
-		else if (str[i] == '$' && !str[i + 1])
-			cont = ft_strjoinfree(cont, "$");
-		free(key);
+		cont = ft_exdqu_ifs(str, data, cont, &i);
 	}
 	return (cont);
 }
