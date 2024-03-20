@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:30:18 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/19 00:06:24 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 09:12:49 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_execute_builtin(t_data *data, t_pipe *p)
 {
 	if (!data->pipes && !ft_open_builtin(data, p, p->fds, -1))
-		return (0);
+		return (1);
 	if (p->builtin == 1)
 		return (ft_echo(p));
 	else if (p->builtin == 2)

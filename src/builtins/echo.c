@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 22:56:41 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/17 08:44:15 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/20 09:56:17 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	ft_check_flag(char *args, int found)
 	{
 		if (args[i] != 'n' && found == 0)
 			n_flag = 0;
+		else if (args[i] != 'n' && found == 1)
+			return (0);
 		i++;
 	}
 	return (n_flag);
@@ -37,7 +39,7 @@ int	ft_echo(t_pipe *p)
 	i = 1;
 	if (p->out == -3)
 		p->out = 1;
-	if (!p->cmds[1])
+	if (!p->cmds[i])
 	{
 		ft_putstr_fd("\n", p->out);
 		return (0);
@@ -45,10 +47,12 @@ int	ft_echo(t_pipe *p)
 	while (p->cmds[i] && p->cmds[i][0] == '-' && p->cmds[i][1] != '-')
 	{
 		if (ft_check_flag(p->cmds[i], n_flag) == 1)
+		{
 			n_flag = 1;
+			i++;
+		}
 		else
 			break ;
-		i++;
 	}
 	while (p->cmds[i])
 	{

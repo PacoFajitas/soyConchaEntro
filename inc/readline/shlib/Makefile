@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = ..
 topdir = ..
-BUILD_DIR = /Users/tfiguero/Desktop/soyconchaEntro/inc/readline
+BUILD_DIR = /Users/tfiguero/Desktop/SoyConchaEntroPerso/inc/readline
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
