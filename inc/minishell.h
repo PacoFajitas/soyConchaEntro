@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:36:05 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 21:51:12 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:23:03 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ int			ft_parser(t_data *data, t_token **token, int ret, t_fd *fd);
 void		ft_general_handler(int type);
 void		ft_sigquit(int sig);
 void		ft_sigint(int sig);
+void		ft_sigint_exec(int sig);
 
 /*	SYNTAX	*/
 /*	syntax.c	*/

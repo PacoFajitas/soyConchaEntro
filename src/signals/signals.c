@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 21:04:23 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/17 04:56:02 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:24:43 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_general_handler(int type)
 	}
 	if (type == 1)
 	{
-		signal(SIGINT, ft_sigint);
+		signal(SIGINT, ft_sigint_exec);
 		signal(SIGQUIT, ft_sigquit);
 		signal(SIGTERM, SIG_IGN);
 	}
@@ -34,7 +34,6 @@ void	ft_sigquit(int sig)
 {
 	(void)sig;
 	rl_on_new_line();
-	// rl_redisplay();
 }
 
 void	ft_sigint(int sig)
@@ -44,4 +43,11 @@ void	ft_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+}
+void	ft_sigint_exec(int sig)
+{
+	(void)sig;
+	ft_putstr_fd("\n", 2);
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }

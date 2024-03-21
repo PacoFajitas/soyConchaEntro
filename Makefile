@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+         #
+#    By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 19:38:11 by mlopez-i          #+#    #+#              #
-#    Updated: 2024/03/20 21:01:55 by mlopez-i         ###   ########.fr        #
+#    Updated: 2024/03/21 14:11:56 by tfiguero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ SRCS += $(addprefix $(SYNTAX_PATH)/, syntax.c)
 
 
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -I ./inc -g -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror -I ./inc #-g -fsanitize=address 
 
 RDLFL = -lreadline -ltermcap #-lhistory -lft 
 READL = inc/readline/libreadline.a 

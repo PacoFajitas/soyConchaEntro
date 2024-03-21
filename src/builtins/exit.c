@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 06:50:57 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 18:57:28 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:16:43 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ int	ft_exit(t_data *data)
 	exit_status = data->exit;
 	ft_clean_all_data(data);
 	if (!print)
-		ft_putstr_fd("exit", 1);
+		ft_putstr_fd("exit\n", 1);
 	return (exit_status);
 }
