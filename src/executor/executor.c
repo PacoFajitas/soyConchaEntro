@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:30:18 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/22 13:17:12 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:37:01 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_check_access(t_data *data, char **cmd, t_pipe *p)
 
 void	ft_child_process(t_data *data, t_pipe *p, int last)
 {
+	init_signals(2);
 	if (!last)
 	{
 		close(data->fd[0]);
@@ -120,5 +121,7 @@ int	ft_executor(t_data *data, t_pipe *p)
 	exit_status(data, -1);
 	if (p->cmds && p->cmds[0] && !ft_strcmp(p->cmds[0], "test"))
 		data->exit = 1;
+	if (g_sig != -3)
+		data->exit = g_sig;
 	return (data->off);
 }

@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:32:59 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/18 14:07:11 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:39:22 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	ft_save_hd(char *key, t_env **env)
 
 	if (pipe(hd) == -1)
 		return (0);
+	init_signals(2);
+	do_sigign(SIGQUIT);
 	while (1)
 	{
 		str = readline("> ");
@@ -82,7 +84,9 @@ int	ft_save_hd(char *key, t_env **env)
 		write(hd[1], "\n", 1);
 		str = ft_memdel(str);
 		exp = ft_memdel(exp);
+		// do_sigign(SIGQUIT);
 	}
+	printf("tu puta madre");
 	str = ft_memdel(str);
 	exp = ft_memdel(exp);
 	close(hd[1]);

@@ -6,48 +6,84 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 21:04:23 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/22 11:00:44 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:38:18 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
-//   type 0 = general
-//   type 1 = bloqueantes
-void	ft_general_handler(int type)
+int	init_signals(int mode)
 {
-	if (type == 0)
+	struct sigaction	signal;
+
+	signal.sa_flags = SA_RESTART;
+	sigemptyset(&signal.sa_mask);
+	if (mode == 1)
+		signal.sa_sigaction = norm_handler;
+	else if (mode == 2)
+		signal.sa_sigaction = ninter_handler;
+	else if (mode == 3)
+		signal.sa_sigaction = heredoc_handler;
+	sigaction(SIGINT, &signal, NULL);
+	sigaction(SIGQUIT, &signal, NULL);
+	return (0);
+}
+
+void	do_sigign(int signum)
+{
+	struct sigaction	signal;
+
+	signal.sa_handler = SIG_IGN;
+	signal.sa_flags = SA_RESTART;
+	sigemptyset(&signal.sa_mask);
+	if (sigaction(signum, &signal, NULL) < 0)
+		return ;
+}
+
+void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
+{
+	(void) data;
+	(void) non_used_data;
+	if (sig == SIGINT)
 	{
-		signal(SIGINT, ft_sigint);
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGTERM, SIG_IGN);
+		ft_putstr_fd("\n", 1);
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		rl_redisplay();
+		g_sig = 1;
 	}
-	if (type == 1)
+	return ;
+}
+
+void	heredoc_handler(int sig, siginfo_t *data, void *non_used_data)
+{
+	(void) data;
+	(void) non_used_data;
+	if (sig == SIGINT)
 	{
-		signal(SIGINT, ft_sigint_exec);
-		signal(SIGQUIT, ft_sigquit);
-		signal(SIGTERM, SIG_IGN);
+		g_sig = 1;
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		rl_redisplay();
+		ft_putstr_fd("\n", 1);
+		return ;
 	}
+	return ;
 }
 
-void	ft_sigquit(int sig)
+void	ninter_handler(int sig, siginfo_t *data, void *non_used_data)
 {
-	(void)sig;
-	rl_on_new_line();
-}
-
-void	ft_sigint(int sig)
-{
-	(void)sig;
-	ft_putstr_fd("\n", 2);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-void	ft_sigint_exec(int sig)
-{
-	(void)sig;
-	ft_putstr_fd("\n", 2);
-	rl_on_new_line();
-	rl_replace_line("", 0);
+	(void) data;
+	(void) non_used_data;
+	if (sig == SIGINT)
+	{
+		g_sig = 130;
+		exit(130);
+	}
+	else if (sig == SIGQUIT)
+	{
+		g_sig = 131;
+		exit(130);
+	}
+	return ;
 }

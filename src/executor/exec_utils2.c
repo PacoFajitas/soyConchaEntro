@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 20:15:50 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/22 11:02:05 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:33:16 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	exit_status(t_data	*data, int j)
 			{
 				if (WTERMSIG(data->status) == SIGINT)
 				{
-					// printf("\n");
+					printf("\n");
 					data->exit = 130;
 				}
 				else if (WTERMSIG(data->status) == SIGQUIT)

@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:37:26 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/22 11:01:50 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:32:52 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ void	ft_print_banner(void)
 
 int	ft_minihell(t_data *data)
 {
-	ft_general_handler(0);
+	init_signals(1);
+	do_sigign(SIGQUIT);
 	data->line = readline("minihell😭🔥👿$ ");
-	ft_general_handler(1);
+	do_sigign(SIGINT);
 	add_history(data->line);
 	if (!ft_tokenize(data, data->line, NULL, 0))
 		return (0);

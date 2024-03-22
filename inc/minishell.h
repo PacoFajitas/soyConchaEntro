@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:36:05 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/22 11:23:42 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:29:41 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ typedef struct s_data
 	int		exit;
 	int		off;
 }	t_data;
+
+int	g_sig;
 
 /*	FUNCTIONS	*/
 /*	BUILTINS	*/
@@ -218,10 +220,11 @@ int			ft_parser(t_data *data, t_token **token, int ret, t_fd *fd);
 
 /*	SIGNALS	*/
 /*	signals.c	*/
-void		ft_general_handler(int type);
-void		ft_sigquit(int sig);
-void		ft_sigint(int sig);
-void		ft_sigint_exec(int sig);
+int			init_signals(int mode);
+void		do_sigign(int signum);
+void		norm_handler(int sig, siginfo_t *data, void *non_used_data);
+void		heredoc_handler(int sig, siginfo_t *data, void *non_used_data);
+void		ninter_handler(int sig, siginfo_t *data, void *non_used_data);
 
 /*	SYNTAX	*/
 /*	syntax.c	*/

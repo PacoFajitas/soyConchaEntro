@@ -6,7 +6,7 @@
 #    By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 19:38:11 by mlopez-i          #+#    #+#              #
-#    Updated: 2024/03/22 14:00:57 by tfiguero         ###   ########.fr        #
+#    Updated: 2024/03/22 18:48:07 by tfiguero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ SRCS += $(addprefix $(SYNTAX_PATH)/, syntax.c)
 
 
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -I ./inc #-g -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror -I ./inc -g #-fsanitize=address 
 
 RDLFL = -lreadline -ltermcap #-lhistory -lft 
 READL = inc/readline/libreadline.a 

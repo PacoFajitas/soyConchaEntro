@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:27:04 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/22 12:17:44 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:30:26 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_init_envs(t_env **env, t_env **export, char **envp)
 		ft_get_env(envp, env);
 	}
 	ft_shlvl(env, NULL, 0, NULL);
-	ft_general_handler(0);
 	ft_sort_env(env);
 	return (1);
 }
@@ -49,6 +48,7 @@ int	ft_init_data(t_data *data, char **envp)
 	data->off = 0;
 	data->exp = 0;
 	data->status = 0;
+	g_sig = -3;
 	return (ft_init_envs(&data->env, &data->export, envp));
 }
 
@@ -56,6 +56,7 @@ void	ft_clean_data(t_data *data)
 {
 	data->pipes = 0;
 	data->exp = 0;
+	g_sig = -3;
 	if (data->token)
 		ft_free_token(&data->token);
 	data->token = NULL;
