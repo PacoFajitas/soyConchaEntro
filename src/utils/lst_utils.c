@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:16:13 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 21:34:26 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:11:51 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ char	**ft_token_to_array2(char **cmds, int *i)
 	return (array);
 }
 
-char	**ft_token_to_array(t_token **token, char **cmds)
+char	**ft_token_to_array(t_token **token, char **cmds, int i)
 {
 	char	**array;
-	int		i;
 	t_token	*tmp;
 
-	i = 0;
 	while (cmds && cmds[i])
 		i++;
 	tmp = *token;
@@ -62,7 +60,10 @@ char	**ft_token_to_array(t_token **token, char **cmds)
 	}
 	array = ft_token_to_array2(cmds, &i);
 	if (!array)
+	{
+		ft_free_array(cmds);
 		return (NULL);
+	}
 	tmp = *token;
 	return (ft_aux_array(tmp, array, i));
 }
@@ -111,6 +112,7 @@ char	**ft_aux_array_else(t_token *tmp, char **array, int *i)
 
 char	**ft_aux_array(t_token *tmp, char **array, int i)
 {
+	// system("leaks minishell");
 	while (tmp)
 	{
 		if (tmp->type != SPACES)
@@ -131,5 +133,6 @@ char	**ft_aux_array(t_token *tmp, char **array, int i)
 		}
 		tmp = tmp->next;
 	}
+	// system("leaks minishell");
 	return (array);
 }

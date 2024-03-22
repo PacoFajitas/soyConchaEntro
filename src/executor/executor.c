@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:30:18 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 21:52:01 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:17:12 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int	ft_last_process(t_data *data, t_pipe *p)
 		ft_child_process(data, p, 1);
 	if (data->pipes && data->p->in >= 0)
 		close(p->in);
-	close(data->fd[0]);
+	if (data->fd[0] >= 0)
+		 close(data->fd[0]);
 	return (1);
 }
 

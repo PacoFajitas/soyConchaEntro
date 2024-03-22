@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 06:50:57 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/21 13:16:43 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:10:22 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,14 @@ long long int	ft_atol_sh(char *str, int *err, int i)
 	return ((number *= sign));
 }
 
-int	ft_isnum(char *str)
+int	ft_isnum(char *str, int i, int ret, int j)
 {
-	int	i;
-	int	ret;
-
-	ret = 1;
-	i = 0;
-	while (str[i] == '-')
-		i++;
+	while (*str == ' ')
+	{
+		j++;
+		str++;
+	}
+	while (str[i++] == '-')
 	if (!str[i] && i == 2)
 		return (1);
 	else if (str[i] && i == 2)
@@ -65,6 +64,8 @@ int	ft_isnum(char *str)
 			ret = 0;
 		i++;
 	}
+	while (j-- >= 0)
+		str--;
 	return (ret);
 }
 
@@ -86,17 +87,15 @@ int	ft_exit_b(t_pipe *p, t_data *data, int num, int err)
 		num = ft_atol_sh(p->cmds[1], &err, 0);
 		if (ft_count_args(p) > 2)
 			return (ft_exit_error(NULL, "too many arguments"));
-		else if (err != 0 || ft_isnum(ft_strtrim(p->cmds[1], " ")) == 0)
+		
+		if (err != 0 || ft_isnum(p->cmds[1], 0, 1, 0) == 0)
 		{
-			data->off = 1;
 			ft_exit_error(p->cmds[1], "numeric argument required");
 			num = 255;
 		}
 		else
-		{
-			data->off = 1;
 			num = ft_atol_sh(p->cmds[1], &err, 0);
-		}
+		data->off = 1;
 	}
 	else
 	{

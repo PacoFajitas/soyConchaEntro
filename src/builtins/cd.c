@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 22:57:31 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/20 18:25:56 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:01:58 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	ft_cd_access(t_data *data, char *path)
 {
 	struct stat	stat;
-	char		*error;
 
-	error = ft_strdup("");
 	lstat(path, &stat);
 	if (access(path, F_OK) == -1)
 	{
@@ -25,15 +23,9 @@ int	ft_cd_access(t_data *data, char *path)
 		perror(path);
 	}
 	if (!S_ISDIR(stat.st_mode))
-	{
-		error = ft_strjoin(path, ": Not a directory\n");
-		return (ft_error_ret(data, "cd", error, 1));
-	}
+		return (ft_error_ret(data, "cd", "Not a directory", 1));
 	if (access(path, X_OK) == -1)
-	{
-		error = ft_strjoin(path, ": Permission denied\n");
-		return (ft_error_ret(data, "cd", error, 1));
-	}
+		return (ft_error_ret(data, "cd", "Permission denied", 1));
 	return (0);
 }
 

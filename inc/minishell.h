@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:36:05 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/21 13:23:03 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:23:42 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int			ft_count_env(t_env *env);
 /*	env.c	*/
 int			ft_get_env(char **envp, t_env **env);
 void		ft_init_new_env(t_env **env);
-void		ft_shlvl(t_env **env);
+void		ft_shlvl(t_env **env, t_env *temp, int shlvl, char *str);
 int			ft_print_env(t_env **env, t_pipe *p);
 void		ft_free_env(t_env **env);
 
@@ -243,7 +243,7 @@ int			ft_heredoc(t_data *data, char *key);
 void		ft_free_fds(t_fd **fd);
 /*	lst_utils.c	*/
 char		**ft_token_to_array2(char **cmds, int *i);
-char		**ft_token_to_array(t_token **token, char **cmds);
+char		**ft_token_to_array(t_token **token, char **cmds, int i);
 char		**ft_aux_array_if(t_token *tmp, char **array, int *i, int j);
 char		**ft_aux_array_else(t_token *tmp, char **array, int *i);
 char		**ft_aux_array(t_token *tmp, char **array, int i);

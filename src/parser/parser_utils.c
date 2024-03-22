@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:44:40 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 19:46:46 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:39:28 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	ft_free_pipe(t_pipe **p)
 		tmp = (*p)->next;
 		if ((*p)->cmds)
 			ft_free_array((*p)->cmds);
+		if ((*p)->fds)
+			ft_free_fds(&(*p)->fds);
 		if ((*p)->path)
 			free((*p)->path);
 		free(*p);

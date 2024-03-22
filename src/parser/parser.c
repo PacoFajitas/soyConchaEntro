@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:46:06 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 19:45:57 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:23:55 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	parse_redirs(t_data *data, t_token **tmp)
 
 int	parse_cmds(t_data *data, t_pipe *p, t_token **tmp)
 {
-	p->cmds = ft_token_to_array(tmp, p->cmds);
+	p->cmds = ft_token_to_array(tmp, p->cmds, 0);
 	if (!p->cmds)
 		return (0);
 	p->path = ft_get_cmd_path(&data->env, p->cmds[0]);

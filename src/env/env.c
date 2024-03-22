@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:26:44 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/17 05:15:12 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:56:51 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,25 @@ void	ft_init_new_env(t_env **env)
 	*env = temp;
 }
 
-void	ft_shlvl(t_env **env)
+void	ft_shlvl(t_env **env, t_env *temp, int shlvl, char *str)
 {
-	t_env	*temp;
-	int		shlvl;
-
 	temp = *env;
 	while (temp)
 	{
 		if (ft_strncmp(temp->key, "SHLVL", 5) == 0)
 		{
 			shlvl = ft_atoi(temp->value);
+			if (shlvl > 999)
+			{
+				str = ft_itoa(shlvl + 1);
+				ft_putstr_fd("minishell: warning: shell level (", 2);
+				ft_putstr_fd(str, 2);
+				ft_putstr_fd(") too high, resetting to 1\n", 2);
+				shlvl = 0;
+				free(str);
+			}
+			if (shlvl < 0)
+				shlvl = -1;
 			shlvl++;
 			free(temp->value);
 			temp->value = ft_itoa(shlvl);
