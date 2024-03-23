@@ -6,7 +6,7 @@
 /*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:16:13 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/22 12:11:51 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:46:54 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ char	**ft_aux_array_else(t_token *tmp, char **array, int *i)
 
 char	**ft_aux_array(t_token *tmp, char **array, int i)
 {
-	// system("leaks minishell");
 	while (tmp)
 	{
 		if (tmp->type != SPACES)
@@ -133,6 +132,5 @@ char	**ft_aux_array(t_token *tmp, char **array, int i)
 		}
 		tmp = tmp->next;
 	}
-	// system("leaks minishell");
 	return (array);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:37:26 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/23 16:13:38 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:01:06 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	ft_minihell(t_data *data)
 	init_signals(1);
 	do_sigign(SIGQUIT);
 	data->line = readline("minihell😭🔥👿$ ");
+	if (!data->line)
+		return (0);
+	if (ft_strcmp(data->line, "\"\"") == 0
+		|| ft_strcmp(data->line, "\'\'") == 0)
+		return (1);
 	do_sigign(SIGINT);
 	add_history(data->line);
 	if (!ft_tokenize(data, data->line, NULL, 0))

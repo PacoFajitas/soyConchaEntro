@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:36:05 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/23 16:02:07 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:59:44 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_fd
 {
 	int			fd;
 	int			type;
-	int			not_hd;
 	char		*str;
 	struct s_fd	*next;
 }	t_fd;
@@ -187,7 +186,8 @@ t_env			*ft_search_keys(char *key, t_env **list);
 /*	export.c	*/
 void			ft_filter_export2(t_data **data, char *str,
 					t_env *temp, t_env *temp2);
-void			ft_filter_export(t_data **data, char *str, char *key, t_env *temp2);
+void			ft_filter_export(t_data **data, char *str,
+					char *key, t_env *temp2);
 int				ft_export(t_data **data, t_pipe *p, int i);
 void			ft_print_export(t_data *data, int fd);
 
@@ -223,7 +223,6 @@ int				ft_parser(t_data *data, t_token **token, int ret, t_fd *fd);
 
 /*	SIGNALS	*/
 /*	signals.c	*/
-void			signals_print_handler(void);
 int				init_signals(int mode);
 void			do_sigign(int signum);
 void			norm_handler(int sig, siginfo_t *data, void *non_used_data);

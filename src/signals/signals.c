@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 21:04:23 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/23 14:15:39 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:54:17 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	init_signals(int mode)
 
 	signal.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigemptyset(&signal.sa_mask);
-	signals_print_handler();
 	if (mode == 1)
 		signal.sa_sigaction = norm_handler;
 	else if (mode == 2)
@@ -54,15 +53,6 @@ void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
 		g_sig = 1;
 	}
 	return ;
-}
-
-void	signals_print_handler(void)
-{
-	struct termios	tc;
-
-	tcgetattr(0, &tc);
-	tc.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &tc);
 }
 
 void	heredoc_handler(int sig, siginfo_t *data, void *non_used_data)

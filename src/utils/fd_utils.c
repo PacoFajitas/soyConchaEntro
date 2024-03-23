@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:32:59 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/23 14:22:31 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:23:55 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	init_fd(t_fd *fd, int t, int fdt, char *key)
 {
 	fd->fd = fdt;
-	fd->not_hd = 0;
 	fd->next = NULL;
 	fd->type = t;
 	if (key)

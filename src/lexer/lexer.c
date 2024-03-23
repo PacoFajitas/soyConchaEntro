@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 19:30:53 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 19:38:23 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:39:42 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int	ft_tokenize(t_data *data, char *line, t_token *token, int i)
 {
 	line = ft_clean_line(line);
 	data->line = line;
-	if (!line)
-		return (0);
+	if (!data->line)
+		return (1);
 	while (line[i])
 	{
 		if (line[i] == ' ')

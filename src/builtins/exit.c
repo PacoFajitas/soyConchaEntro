@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 06:50:57 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/23 16:07:13 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:57:20 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	ft_isnum(char *str, int i, int ret)
 {
 	if (ft_strlen(str) == 0)
 		return (0);
-	while (str[i++] == '-')
+	while (str[i] == '-')
+		i++;
 	if (!str[i] && i == 2)
 		return (1);
 	else if (str[i] && i == 2)
@@ -82,7 +83,6 @@ int	ft_exit_b(t_pipe *p, t_data *data, int num, int err)
 		num = ft_atol_sh(p->cmds[1], &err, 0);
 		if (ft_count_args(p) > 2)
 			return (ft_exit_error(NULL, "too many arguments"));
-		
 		if (err != 0 || ft_isnum(p->cmds[1], 0, 1) == 0)
 		{
 			ft_exit_error(p->cmds[1], "numeric argument required");

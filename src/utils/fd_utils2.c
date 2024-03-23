@@ -3,28 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   fd_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:51:37 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/23 14:21:34 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:53:36 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_print_fds(t_fd *fd)
+int	ft_cosas_hd(int pid, t_data *data, t_fd *new, int hd[2])
 {
-	t_fd	*fd1;
+	int		status;
 
-	fd1 = fd;
-	dprintf(1, "hola\n");
-	while (fd1)
+	if (pid == 0)
 	{
-		if (fd1->str)
-			dprintf(1, "fd1.str::%s\n", fd1->str);
-		dprintf(1, "ei\n");
-		fd1 = fd1->next;
-	}	
+		init_signals(3);
+		ft_save_hd(new->str, &data->env, hd);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		new->fd = hd[0];
+		close(hd[1]);
+		if (WTERMSIG(status) == SIGINT)
+		{
+			ft_putstr_fd("\n", 1);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 /*	es keyword haya espacio o no!!	*/
@@ -33,7 +41,6 @@ int	ft_heredoc(t_data *data, char *key)
 {
 	t_fd	*new;
 	pid_t	pid;
-	int		status;
 	int		hd[2];
 
 	new = malloc(sizeof(t_fd));
@@ -44,26 +51,8 @@ int	ft_heredoc(t_data *data, char *key)
 	pipe(hd);
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
-	if (pid == 0)
-	{
-		init_signals(3);
-		dprintf(1, "ei g_sig :: %i\n", g_sig);
-		ft_save_hd(key, &data->env, hd);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		new->fd = hd[0];
-		close(hd[1]);
-		dprintf(1, "holi g_sig :: %i\n", g_sig);
-		if (WTERMSIG(status) == SIGINT)
-		{
-			dprintf(1, "hola\n");
-			ft_putstr_fd("\n", 1);
-			return (0);
-		}
-	}
-	dprintf(1, "holis g_sig :: %i\n", g_sig);
+	if (!ft_cosas_hd(pid, data, new, hd))
+		return (0);
 	return (1);
 }
 

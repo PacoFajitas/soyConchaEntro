@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:04:11 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/20 19:41:30 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:29:56 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_clean_line(char *line)
 	char	*tmp;
 
 	i = 0;
-	if (!line)
+	if (!line || line[0] == '\0')
 		return (NULL);
 	while (line[i] && line[i] == ' ')
 		i++;

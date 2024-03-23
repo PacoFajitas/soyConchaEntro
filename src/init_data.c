@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 18:27:04 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/23 13:32:36 by mlopez-i         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:23:23 by tfiguero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	ft_init_data(t_data *data, char **envp)
 	data->off = 0;
 	data->exp = 0;
 	data->status = 0;
+	data->pid = -3;
 	g_sig = -3;
 	return (ft_init_envs(&data->env, &data->export, envp));
 }
