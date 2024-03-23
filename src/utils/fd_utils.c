@@ -3,20 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 19:32:59 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/22 19:39:22 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:22:31 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	init_fd(t_fd *fd, int t, int fdt)
+void	init_fd(t_fd *fd, int t, int fdt, char *key)
 {
 	fd->fd = fdt;
+	fd->not_hd = 0;
 	fd->next = NULL;
 	fd->type = t;
+	if (key)
+	{
+		fd->str = ft_strdup(key);
+		if (!fd->str)
+			ft_error(NULL, NULL, NULL, "malloc error");
+	}
 }
 
 void	ft_add_fd(t_fd **fd, t_fd *new)
@@ -62,33 +69,30 @@ char	*ft_expand_hd(char *str, t_env **env, int i)
 	return (cont);
 }
 
-int	ft_save_hd(char *key, t_env **env)
+void	ft_save_hd(char *key, t_env **env, int hd[2])
 {
-	int		hd[2];
 	char	*str;
 	char	*exp;
 
-	if (pipe(hd) == -1)
-		return (0);
-	init_signals(2);
 	do_sigign(SIGQUIT);
+	str = readline("> ");
 	while (1)
 	{
-		str = readline("> ");
 		if (!str)
-			return (0);
+			exit (0);
 		else if (!ft_strcmp(str, key))
 			break ;
 		exp = ft_expand_hd(str, env, 0);
-		write(hd[1], exp, ft_strlen(exp));
-		write(hd[1], "\n", 1);
+		ft_putstr_fd(exp, hd[1]);
+		ft_putstr_fd("\n", hd[1]);
 		str = ft_memdel(str);
 		exp = ft_memdel(exp);
-		// do_sigign(SIGQUIT);
+		do_sigign(SIGQUIT);
+		str = readline("> ");
 	}
-	printf("tu puta madre");
 	str = ft_memdel(str);
 	exp = ft_memdel(exp);
 	close(hd[1]);
-	return (hd[0]);
+	close(hd[0]);
+	exit (0);
 }

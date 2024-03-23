@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:30:18 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/22 19:37:01 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:01:18 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,5 @@ int	ft_executor(t_data *data, t_pipe *p)
 	exit_status(data, -1);
 	if (p->cmds && p->cmds[0] && !ft_strcmp(p->cmds[0], "test"))
 		data->exit = 1;
-	if (g_sig != -3)
-		data->exit = g_sig;
 	return (data->off);
 }

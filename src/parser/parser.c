@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 19:46:06 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/22 11:23:55 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:52:53 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	ft_skip_redirs(t_token **tmp, t_pipe *p, t_fd **fd)
 	}
 	if ((*tmp) && ((*tmp)->type >= 1 && (*tmp)->type <= 3))
 	{
+		// dprintf(1, "g_sig::%i  (8fd).type::%i\n", g_sig, (*fd)->type);
 		new = malloc(sizeof(t_fd));
-		init_fd(new, type, (*fd)->fd);
-		new->str = ft_strdup((*fd)->str);
+		init_fd(new, type, (*fd)->fd, (*fd)->str);
 		ft_add_fd(&p->fds, new);
 		*fd = (*fd)->next;
 		(*tmp) = (*tmp)->next;

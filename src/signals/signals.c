@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 21:04:23 by tfiguero          #+#    #+#             */
-/*   Updated: 2024/03/22 19:38:18 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:15:39 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	init_signals(int mode)
 {
 	struct sigaction	signal;
 
-	signal.sa_flags = SA_RESTART;
+	signal.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigemptyset(&signal.sa_mask);
+	signals_print_handler();
 	if (mode == 1)
 		signal.sa_sigaction = norm_handler;
 	else if (mode == 2)
@@ -37,7 +38,7 @@ void	do_sigign(int signum)
 	signal.sa_flags = SA_RESTART;
 	sigemptyset(&signal.sa_mask);
 	if (sigaction(signum, &signal, NULL) < 0)
-		return ;
+		exit (1);
 }
 
 void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
@@ -55,18 +56,27 @@ void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
 	return ;
 }
 
+void	signals_print_handler(void)
+{
+	struct termios	tc;
+
+	tcgetattr(0, &tc);
+	tc.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &tc);
+}
+
 void	heredoc_handler(int sig, siginfo_t *data, void *non_used_data)
 {
 	(void) data;
 	(void) non_used_data;
 	if (sig == SIGINT)
 	{
-		g_sig = 1;
 		rl_replace_line("", 1);
 		rl_on_new_line();
 		rl_redisplay();
 		ft_putstr_fd("\n", 1);
-		return ;
+		g_sig = 1;
+		exit (1);
 	}
 	return ;
 }

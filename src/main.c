@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfiguero <tfiguero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlopez-i <mlopez-i@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:37:26 by mlopez-i          #+#    #+#             */
-/*   Updated: 2024/03/22 19:32:52 by tfiguero         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:13:38 by mlopez-i         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	ft_minihell(t_data *data)
 	if (!ft_tokenize(data, data->line, NULL, 0))
 		return (0);
 	data->token = ft_expan(&data->token, data, 0, &data->exp);
+	ft_look_for_quotes(&data->token);
 	if (!ft_syntax_error(data, &data->token))
 		return (1);
-	ft_look_for_quotes(&data->token);
 	if (!data->token)
 		return (1);
 	if (!ft_parser(data, &data->token, 1, data->fds))
