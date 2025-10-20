@@ -85,6 +85,3 @@ Its goal is to replicate essential shell behavior — executing commands, handli
 | ⚙️ **Makefile** | Build automation |
 | 🐚 **Bash** | Behavior reference shell |
 
----
-
-⭐️ *“Because making your own shell teaches you more than using one.”*
